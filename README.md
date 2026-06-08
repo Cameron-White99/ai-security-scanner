@@ -16,14 +16,14 @@ This tool provides that visibility.
 
 ## Features
 
-| Feature | Description | Status |
-|---|---|---|
+| Feature                        | Description                                                                     | Status         |
+| ------------------------------ | ------------------------------------------------------------------------------- | -------------- |
 | **Prompt Injection Detection** | Pattern and heuristic-based detection of direct and indirect injection attempts | 🔨 In progress |
-| **Risk Scoring** | Severity scoring per request with configurable thresholds | 🔨 In progress |
-| **Security Report Generation** | Structured JSON and human-readable reports per scan session | 📋 Planned |
-| **Audit Logging** | Immutable log of all analysed inputs, detections, and risk scores | 📋 Planned |
-| **REST API** | FastAPI-based API for integration into existing pipelines | 🔨 In progress |
-| **Dashboard** | React frontend for visualising scan results and trends | 📋 Planned |
+| **Risk Scoring**               | Severity scoring per request with configurable thresholds                       | 🔨 In progress |
+| **Security Report Generation** | Structured JSON and human-readable reports per scan session                     | 📋 Planned     |
+| **Audit Logging**              | Immutable log of all analysed inputs, detections, and risk scores               | 📋 Planned     |
+| **REST API**                   | FastAPI-based API for integration into existing pipelines                       | 🔨 In progress |
+| **Dashboard**                  | React frontend for visualising scan results and trends                          | 📋 Planned     |
 
 ---
 
@@ -44,6 +44,7 @@ This tool provides that visibility.
 ```
 
 **Services:**
+
 - **FastAPI** — REST API layer, request handling, report generation
 - **Detection Engine** — modular rule-based and heuristic detection pipeline
 - **PostgreSQL** — persistent storage for audit logs, scan history, risk scores
@@ -73,7 +74,7 @@ Attack taxonomy follows [OWASP Top 10 for LLMs](https://owasp.org/www-project-to
 - **Database:** PostgreSQL
 - **Containerisation:** Docker / Docker Compose
 - **Cloud:** Google Cloud Run
-- **Frontend:** React / Next.js *(planned)*
+- **Frontend:** React / Next.js _(planned)_
 
 ---
 
@@ -83,7 +84,7 @@ Attack taxonomy follows [OWASP Top 10 for LLMs](https://owasp.org/www-project-to
 
 ```bash
 # Clone the repository
-git clone https://github.com/cameronwhite/ai-security-scanner.git
+git clone https://github.com/cameron-white99/ai-security-scanner.git
 cd ai-security-scanner
 
 # Start services
