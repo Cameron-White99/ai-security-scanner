@@ -3,10 +3,10 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.middleware.logging import RequestLoggingMiddleware
-from api.routes import scans
+from api.routes import scans, reports
 from config.settings import get_settings
 from db.database import engine, Base
-from db.models import Scan, Detection  # noqa: F401 — ensure models are registered
+from db.models import Scan, Detection, Report  # noqa: F401 — ensure models are registered
 
 settings = get_settings()
 
@@ -42,6 +42,7 @@ app.add_middleware(
 )
 
 app.include_router(scans.router, prefix=settings.api_prefix)
+app.include_router(reports.router, prefix=settings.api_prefix)
 
 
 @app.get("/health")
