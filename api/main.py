@@ -36,7 +36,7 @@ app = FastAPI(
 app.add_middleware(RequestLoggingMiddleware)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.allowed_origins,
+    allow_origins=[o.strip() for o in settings.allowed_origins.split(",")],
     allow_methods=["*"],
     allow_headers=["*"],
 )
