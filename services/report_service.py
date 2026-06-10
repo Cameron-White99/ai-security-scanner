@@ -73,7 +73,9 @@ class ReportService:
             if attack_type in MITIGATIONS
         }
 
-        summary = _build_summary(from_date, to_date, len(scans), risk_distribution, attack_type_breakdown)
+        summary = _build_summary(
+            from_date, to_date, len(scans), risk_distribution, attack_type_breakdown
+        )
 
         report = Report(
             from_date=from_date,
@@ -109,13 +111,13 @@ def _build_summary(
     attack_sentence = ""
     if attack_type_breakdown:
         top_attack = max(attack_type_breakdown, key=lambda k: attack_type_breakdown[k])
-        attack_sentence = f" The most frequently detected attack type was {top_attack.replace('_', ' ')}."
+        attack_sentence = (
+            f" The most frequently detected attack type was {top_attack.replace('_', ' ')}."
+        )
 
     severity_sentence = ""
     if high_risk_count:
-        severity_sentence = (
-            f" {high_risk_count} scan(s) were rated HIGH or CRITICAL severity, requiring immediate attention."
-        )
+        severity_sentence = f" {high_risk_count} scan(s) were rated HIGH or CRITICAL severity, requiring immediate attention."
 
     return (
         f"Between {start} and {end}, {total_scans} scan(s) were analysed. "

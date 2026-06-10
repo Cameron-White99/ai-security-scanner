@@ -3,6 +3,7 @@ Rule-based prompt injection patterns.
 Each rule defines: id, attack_type, severity, description, and a list of regex patterns.
 Rules are evaluated in order; first match wins for that rule.
 """
+
 import re
 from dataclasses import dataclass
 

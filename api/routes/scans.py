@@ -11,6 +11,7 @@ router = APIRouter(prefix="/scans", tags=["scans"])
 
 # --- Request / Response schemas ---
 
+
 class ScanRequest(BaseModel):
     text: str = Field(..., min_length=1, max_length=32_000, description="Text to analyse")
     source: str | None = Field(None, max_length=255, description="Optional caller identifier")
@@ -42,6 +43,7 @@ class ScanResponse(BaseModel):
 
 
 # --- Endpoints ---
+
 
 @router.post("/", response_model=ScanResponse, status_code=status.HTTP_201_CREATED)
 async def create_scan(request: ScanRequest, db: AsyncSession = Depends(get_db)):

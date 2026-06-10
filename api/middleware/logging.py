@@ -8,7 +8,6 @@ logger = logging.getLogger("ai_security_scanner")
 
 
 class RequestLoggingMiddleware(BaseHTTPMiddleware):
-
     async def dispatch(self, request: Request, call_next) -> Response:
         request_id = str(uuid.uuid4())
         start = time.perf_counter()

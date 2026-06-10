@@ -2,6 +2,7 @@
 LLM fallback classifier using Anthropic API.
 Only called when rule-based + heuristic confidence is below threshold.
 """
+
 import json
 import anthropic
 from config.settings import get_settings
@@ -32,7 +33,6 @@ Attack type definitions:
 
 
 class LLMFallbackClassifier:
-
     def __init__(self):
         self._client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
 

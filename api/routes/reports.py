@@ -12,6 +12,7 @@ router = APIRouter(prefix="/reports", tags=["reports"])
 
 # --- Request / Response schemas ---
 
+
 class ReportRequest(BaseModel):
     from_date: datetime
     to_date: datetime
@@ -40,6 +41,7 @@ class ReportResponse(BaseModel):
 
 
 # --- Endpoints ---
+
 
 @router.post("/", response_model=ReportResponse, status_code=status.HTTP_201_CREATED)
 async def create_report(request: ReportRequest, db: AsyncSession = Depends(get_db)):

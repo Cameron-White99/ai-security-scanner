@@ -2,6 +2,7 @@
 Detection engine — orchestrates the full pipeline:
   rules → heuristics → classifier → (optional LLM fallback) → scorer
 """
+
 from dataclasses import dataclass
 from core.detection.rules.registry import RuleRegistry
 from core.detection.heuristics.analyzer import HeuristicAnalyzer
@@ -21,7 +22,6 @@ class ScanResult:
 
 
 class DetectionEngine:
-
     def __init__(self):
         self._rules = RuleRegistry()
         self._heuristics = HeuristicAnalyzer()

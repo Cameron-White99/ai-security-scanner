@@ -9,9 +9,7 @@ from db.database import Base
 class Report(Base):
     __tablename__ = "reports"
 
-    id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
-    )
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     from_date: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     to_date: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     total_scans: Mapped[int] = mapped_column(Integer, nullable=False)

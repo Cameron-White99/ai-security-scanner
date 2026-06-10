@@ -5,7 +5,6 @@ from db.repositories.scan_repo import ScanRepository
 
 
 class ScanService:
-
     def __init__(self, db_repo: ScanRepository):
         self._engine = DetectionEngine()
         self._repo = db_repo

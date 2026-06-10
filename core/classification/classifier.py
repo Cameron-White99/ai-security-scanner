@@ -38,24 +38,28 @@ class Classifier:
         detections: list[DetectionResult] = []
 
         for match in rule_matches:
-            detections.append(DetectionResult(
-                attack_type=match.rule.attack_type,
-                description=match.rule.description,
-                confidence=match.confidence,
-                severity=match.rule.severity,
-                detection_method="rule",
-                matched_pattern=match.matched_text[:200],
-            ))
+            detections.append(
+                DetectionResult(
+                    attack_type=match.rule.attack_type,
+                    description=match.rule.description,
+                    confidence=match.confidence,
+                    severity=match.rule.severity,
+                    detection_method="rule",
+                    matched_pattern=match.matched_text[:200],
+                )
+            )
 
         for result in heuristic_results:
-            detections.append(DetectionResult(
-                attack_type=result.attack_type,
-                description=result.description,
-                confidence=result.confidence,
-                severity=result.severity,
-                detection_method="heuristic",
-                matched_pattern=None,
-            ))
+            detections.append(
+                DetectionResult(
+                    attack_type=result.attack_type,
+                    description=result.description,
+                    confidence=result.confidence,
+                    severity=result.severity,
+                    detection_method="heuristic",
+                    matched_pattern=None,
+                )
+            )
 
         needs_llm = False
         if not detections:

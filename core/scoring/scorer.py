@@ -2,6 +2,7 @@
 Risk scorer.
 Aggregates detections into a single 0–100 risk score and risk level label.
 """
+
 from dataclasses import dataclass
 from core.classification.classifier import DetectionResult
 
@@ -22,12 +23,11 @@ RISK_LEVELS = [
 
 @dataclass
 class ScoreResult:
-    score: float        # 0–100
-    risk_level: str     # LOW / MEDIUM / HIGH / CRITICAL
+    score: float  # 0–100
+    risk_level: str  # LOW / MEDIUM / HIGH / CRITICAL
 
 
 class RiskScorer:
-
     def score(self, detections: list[DetectionResult]) -> ScoreResult:
         if not detections:
             return ScoreResult(score=0.0, risk_level="LOW")

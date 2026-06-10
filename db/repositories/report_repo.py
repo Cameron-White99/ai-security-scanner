@@ -15,16 +15,11 @@ class ReportRepository:
         return report
 
     async def get_by_id(self, report_id: uuid.UUID) -> Report | None:
-        result = await self.db.execute(
-            select(Report).where(Report.id == report_id)
-        )
+        result = await self.db.execute(select(Report).where(Report.id == report_id))
         return result.scalar_one_or_none()
 
     async def list(self, limit: int = 50, offset: int = 0) -> list[Report]:
         result = await self.db.execute(
-            select(Report)
-            .order_by(Report.created_at.desc())
-            .limit(limit)
-            .offset(offset)
+            select(Report).order_by(Report.created_at.desc()).limit(limit).offset(offset)
         )
         return list(result.scalars().all())

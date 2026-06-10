@@ -4,6 +4,7 @@ Looks for structural anomalies that rules may miss —
 unusual instruction density, delimiter abuse, suspicious length patterns, etc.
 Returns a confidence score and description when an anomaly is detected.
 """
+
 import re
 from dataclasses import dataclass
 
@@ -18,12 +19,18 @@ class HeuristicResult:
 
 
 class HeuristicAnalyzer:
-
     # Instruction-like keywords that inflate suspicion score
     INSTRUCTION_KEYWORDS = [
-        r"\bignore\b", r"\bdisregard\b", r"\binstead\b", r"\bnow\s+do\b",
-        r"\byour\s+task\s+is\b", r"\byou\s+must\b", r"\byou\s+will\b",
-        r"\brespond\s+only\b", r"\bonly\s+respond\b", r"\bdo\s+not\s+(say|tell|mention|reveal)\b",
+        r"\bignore\b",
+        r"\bdisregard\b",
+        r"\binstead\b",
+        r"\bnow\s+do\b",
+        r"\byour\s+task\s+is\b",
+        r"\byou\s+must\b",
+        r"\byou\s+will\b",
+        r"\brespond\s+only\b",
+        r"\bonly\s+respond\b",
+        r"\bdo\s+not\s+(say|tell|mention|reveal)\b",
     ]
 
     def analyze(self, text: str) -> list[HeuristicResult]:
@@ -47,8 +54,7 @@ class HeuristicAnalyzer:
         """Flag unusually high density of instruction-like language."""
         word_count = max(len(text.split()), 1)
         keyword_hits = sum(
-            len(re.findall(kw, text, re.IGNORECASE))
-            for kw in self.INSTRUCTION_KEYWORDS
+            len(re.findall(kw, text, re.IGNORECASE)) for kw in self.INSTRUCTION_KEYWORDS
         )
         density = keyword_hits / word_count
 
@@ -61,12 +67,18 @@ class HeuristicAnalyzer:
                 confidence=confidence,
                 severity="MEDIUM",
             )
-        return HeuristicResult(triggered=False, attack_type="", description="", confidence=0.0, severity="LOW")
+        return HeuristicResult(
+            triggered=False, attack_type="", description="", confidence=0.0, severity="LOW"
+        )
 
     def _check_unusual_delimiters(self, text: str) -> HeuristicResult:
         """Flag inputs containing unusual structural delimiters."""
         delimiter_patterns = [
-            r"={3,}", r"-{3,}", r"\*{3,}", r"#{3,}", r"_{3,}",
+            r"={3,}",
+            r"-{3,}",
+            r"\*{3,}",
+            r"#{3,}",
+            r"_{3,}",
         ]
         hits = sum(len(re.findall(p, text)) for p in delimiter_patterns)
 
@@ -78,7 +90,9 @@ class HeuristicAnalyzer:
                 confidence=0.6,
                 severity="LOW",
             )
-        return HeuristicResult(triggered=False, attack_type="", description="", confidence=0.0, severity="LOW")
+        return HeuristicResult(
+            triggered=False, attack_type="", description="", confidence=0.0, severity="LOW"
+        )
 
     def _check_encoding_obfuscation(self, text: str) -> HeuristicResult:
         """Detect base64 blobs or heavy unicode that may hide injections."""
@@ -93,4 +107,6 @@ class HeuristicAnalyzer:
                 confidence=0.65,
                 severity="MEDIUM",
             )
-        return HeuristicResult(triggered=False, attack_type="", description="", confidence=0.0, severity="LOW")
+        return HeuristicResult(
+            triggered=False, attack_type="", description="", confidence=0.0, severity="LOW"
+        )

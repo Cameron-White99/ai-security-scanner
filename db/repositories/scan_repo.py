@@ -17,9 +17,7 @@ class ScanRepository:
 
     async def get_by_id(self, scan_id: uuid.UUID) -> Scan | None:
         result = await self.db.execute(
-            select(Scan)
-            .where(Scan.id == scan_id)
-            .options(selectinload(Scan.detections))
+            select(Scan).where(Scan.id == scan_id).options(selectinload(Scan.detections))
         )
         return result.scalar_one_or_none()
 
