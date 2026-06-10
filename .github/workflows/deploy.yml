@@ -19,12 +19,13 @@ jobs:
 
       - uses: google-github-actions/setup-gcloud@v2
 
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
       - name: Build and push image
         run: |
-          gcloud builds submit \
-            --tag us-central1-docker.pkg.dev/ai-security-scanner-499001/ai-security-scanner/api:latest \
-            --suppress-logs \
-            .
+          docker build -t us-central1-docker.pkg.dev/ai-security-scanner-499001/ai-security-scanner/api:latest .
+          docker push us-central1-docker.pkg.dev/ai-security-scanner-499001/ai-security-scanner/api:latest
 
       - uses: google-github-actions/deploy-cloudrun@v2
         with:
