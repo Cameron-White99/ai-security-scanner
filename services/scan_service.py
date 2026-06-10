@@ -1,4 +1,3 @@
-import uuid
 from core.detection.engine import DetectionEngine, ScanResult
 from db.models.scan import Scan
 from db.models.detection import Detection
