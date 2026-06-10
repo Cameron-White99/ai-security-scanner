@@ -16,7 +16,7 @@ RISK_LEVELS = [
     (80, "CRITICAL"),
     (55, "HIGH"),
     (30, "MEDIUM"),
-    (0,  "LOW"),
+    (-1, "LOW"),
 ]
 
 
