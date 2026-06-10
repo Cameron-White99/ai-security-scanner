@@ -1,0 +1,32 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build and push image
+        run: |
+          gcloud builds submit \
+            --tag us-central1-docker.pkg.dev/ai-security-scanner-499001/ai-security-scanner/api:latest \
+            .
+
+      - uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ai-security-scanner-api
+          image: us-central1-docker.pkg.dev/ai-security-scanner-499001/ai-security-scanner/api:latest
+          region: us-central1

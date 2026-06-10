@@ -21,6 +21,7 @@ class Settings(BaseSettings):
 
     # API
     api_prefix: str = "/api/v1"
+    allowed_origins: list[str] = ["http://localhost:3000"]
 
     class Config:
         env_file = ".env"
