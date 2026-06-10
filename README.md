@@ -58,7 +58,7 @@ This tool provides that visibility.
 - **FastAPI** — REST API layer, hosted on GCP Cloud Run
 - **Neon** — serverless PostgreSQL for scan history and reports
 - **Docker** — containerised builds via GitHub Actions
-- **GitHub Actions** — CI (lint) on every push, CD (deploy) on merge to main
+- **GitHub Actions** — CI (lint + tests) on push to main, CD (deploy) on merge to main
 
 ---
 

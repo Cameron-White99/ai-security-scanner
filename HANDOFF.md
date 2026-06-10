@@ -29,7 +29,7 @@ The project is fully deployed and working. All features are complete.
 
 ### CI/CD
 
-- **CI** (`.github/workflows/ci.yml`) — runs `ruff check` and `ruff format --check` on every push
+- **CI** (`.github/workflows/python-app.yml`) — runs `ruff check`, `ruff format --check`, and `pytest tests/unit/` on push/PR to main
 - **Deploy** (`.github/workflows/deploy.yml`) — builds Docker image, pushes to Artifact Registry, deploys to Cloud Run on merge to main
 - GitHub secret required: `GCP_SA_KEY` (service account: `github-actions@ai-security-scanner-499001.iam.gserviceaccount.com`)
 
