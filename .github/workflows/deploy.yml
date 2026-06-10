@@ -23,6 +23,7 @@ jobs:
         run: |
           gcloud builds submit \
             --tag us-central1-docker.pkg.dev/ai-security-scanner-499001/ai-security-scanner/api:latest \
+            --suppress-logs \
             .
 
       - uses: google-github-actions/deploy-cloudrun@v2
