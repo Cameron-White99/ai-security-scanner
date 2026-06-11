@@ -67,9 +67,7 @@ class HeuristicAnalyzer:
     ]
 
     def __init__(self):
-        self._persona_compiled = [
-            re.compile(p, re.IGNORECASE) for p in self._PERSONA_PATTERNS
-        ]
+        self._persona_compiled = [re.compile(p, re.IGNORECASE) for p in self._PERSONA_PATTERNS]
         self._social_eng_compiled = [
             re.compile(p, re.IGNORECASE) for p in self._SOCIAL_ENG_PATTERNS
         ]
