@@ -52,9 +52,9 @@ class ReportService:
             level = scan.risk_level
             if level in risk_distribution:
                 risk_distribution[level] += 1
-            for detection in scan.detections:
-                attack_type_breakdown[detection.attack_type] = (
-                    attack_type_breakdown.get(detection.attack_type, 0) + 1
+            for attack_type in {d.attack_type for d in scan.detections}:
+                attack_type_breakdown[attack_type] = (
+                    attack_type_breakdown.get(attack_type, 0) + 1
                 )
 
         top_risks = [
