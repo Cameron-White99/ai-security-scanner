@@ -51,7 +51,7 @@ RULES: list[Rule] = [
         severity="HIGH",
         description="Attempt to extract the system prompt or internal instructions",
         patterns=[
-            r"(print|output|reveal|show|display|repeat|tell\s+me|what\s+is)\s+(your\s+)?(system\s+prompt|initial\s+instructions?|base\s+prompt|original\s+prompt)",
+            r"(print|output|reveal|show|display|repeat|tell\s+me|what\s+is)\s+(your\s+)?(system\s+prompt|system\s+instructions?|initial\s+prompt|initial\s+instructions?|base\s+prompt|original\s+prompt)",
             r"what\s+(were\s+you|are\s+you)\s+(told|instructed|prompted|asked)\s+to",
             r"(summarize|describe|explain)\s+your\s+(system\s+)?instructions?",
         ],
