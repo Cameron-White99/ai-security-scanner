@@ -6,6 +6,8 @@ A security analysis tool for LLM-powered applications. Detects prompt injection 
 
 **Live:** [https://ai-security-scanner-weld.vercel.app](https://ai-security-scanner-weld.vercel.app)
 
+ - Note:  LLM fallback is supported but disabled in the public demo for cost reasons
+
 ---
 
 ## The Problem
