@@ -22,3 +22,6 @@ htmlcov/
 
 # Docker
 postgres_data/
+
+# Credentials
+gha-key.json
