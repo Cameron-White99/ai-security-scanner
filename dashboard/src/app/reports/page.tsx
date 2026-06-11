@@ -181,29 +181,34 @@ export default function ReportsPage() {
                     Attack Types
                   </h3>
                   <div className="space-y-3">
-                    {Object.entries(selected.attack_type_breakdown)
-                      .sort(([, a], [, b]) => b - a)
-                      .map(([type, count]) => (
-                        <div key={type} className="flex items-center gap-3">
-                          <span className="text-xs text-gray-300 capitalize w-36 shrink-0">
-                            {type.replace(/_/g, " ")}
-                          </span>
-                          <div className="flex-1 bg-gray-800 rounded-full h-1.5">
-                            <div
-                              className="bg-blue-500 h-1.5 rounded-full transition-all"
-                              style={{
-                                width:
-                                  selected.total_scans > 0
-                                    ? `${(count / selected.total_scans) * 100}%`
-                                    : "0%",
-                              }}
-                            />
+                    {(() => {
+                      const maxCount = Math.max(
+                        ...Object.values(selected.attack_type_breakdown),
+                      );
+                      return Object.entries(selected.attack_type_breakdown)
+                        .sort(([, a], [, b]) => b - a)
+                        .map(([type, count]) => (
+                          <div key={type} className="flex items-center gap-3">
+                            <span className="text-xs text-gray-300 capitalize w-36 shrink-0">
+                              {type.replace(/_/g, " ")}
+                            </span>
+                            <div className="flex-1 bg-gray-800 rounded-full h-1.5">
+                              <div
+                                className="bg-blue-500 h-1.5 rounded-full transition-all"
+                                style={{
+                                  width:
+                                    maxCount > 0
+                                      ? `${(count / maxCount) * 100}%`
+                                      : "0%",
+                                }}
+                              />
+                            </div>
+                            <span className="text-xs text-gray-500 w-6 text-right">
+                              {count}
+                            </span>
                           </div>
-                          <span className="text-xs text-gray-500 w-6 text-right">
-                            {count}
-                          </span>
-                        </div>
-                      ))}
+                        ));
+                    })()}
                   </div>
                 </div>
               )}
