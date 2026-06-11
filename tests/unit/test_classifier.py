@@ -43,13 +43,15 @@ class TestClassifier:
         assert needs_llm is False
 
     def test_rule_and_heuristic_combined(self):
+        # Same attack_type from rule + heuristic should be merged into one detection
         detections, _ = self.classifier.classify(
             [make_rule_match(confidence=0.9)],
             [make_heuristic_result(confidence=0.6)],
         )
-        assert len(detections) == 2
-        assert any(d.detection_method == "rule" for d in detections)
-        assert any(d.detection_method == "heuristic" for d in detections)
+        assert len(detections) == 1
+        assert detections[0].detection_method == "heuristic+rule"
+        # Confidence should be boosted above the rule's original 0.9
+        assert detections[0].confidence > 0.9
 
     def test_rule_detection_method(self):
         detections, _ = self.classifier.classify([make_rule_match()], [])
