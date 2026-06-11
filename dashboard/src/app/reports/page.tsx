@@ -5,10 +5,18 @@ import { api } from "@/lib/api";
 import type { Report } from "@/lib/types";
 import { RiskDistributionChart } from "@/components/risk-distribution-chart";
 
+function toLocalDatetimeString(d: Date): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return (
+    `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` +
+    `T${pad(d.getHours())}:${pad(d.getMinutes())}`
+  );
+}
+
 function todayMinus(days: number): string {
   const d = new Date();
   d.setDate(d.getDate() - days);
-  return d.toISOString().slice(0, 16);
+  return toLocalDatetimeString(d);
 }
 
 export default function ReportsPage() {
@@ -22,7 +30,7 @@ export default function ReportsPage() {
 
   useEffect(() => {
     setFromDate(todayMinus(7));
-    setToDate(new Date().toISOString().slice(0, 16));
+    setToDate(toLocalDatetimeString(new Date()));
     api.reports.list().then(setReports).finally(() => setLoading(false));
   }, []);
 
