@@ -6,8 +6,9 @@ import { api } from "@/lib/api";
 import type { Scan } from "@/lib/types";
 import { RiskBadge } from "@/components/risk-badge";
 
-function PromptCell({ text }: { text: string }) {
+function PromptCell({ text }: { text: string | null | undefined }) {
   const [expanded, setExpanded] = useState(false);
+  if (!text) return <span className="text-gray-600 text-xs">—</span>;
   const isLong = text.length > 80;
 
   return (
