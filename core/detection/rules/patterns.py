@@ -93,8 +93,10 @@ RULES: list[Rule] = [
         patterns=[
             r"(this\s+document|the\s+following|note\s+to\s+(ai|assistant|llm|model))\s*:\s*(ignore|disregard|instead)",
             r"<\s*hidden\s*>.*<\s*/\s*hidden\s*>",
+            r"<!--.*?(ignore|disregard|instead|override|instruc).*?-->",
             r"\[.*hidden\s+instruction.*\]",
             r"note\s+to\s+(the\s+)?(ai|assistant|model|llm)\s*:",
+            r"the\s+following.{0,60}(ignore|disregard|instead\s+email|instead\s+send|instead\s+output)",
         ],
         confidence=0.9,
     ),
