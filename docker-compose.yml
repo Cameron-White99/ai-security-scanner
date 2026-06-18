@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/ai_security_scanner
+      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://postgres:postgres@db:5432/ai_security_scanner}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       DEBUG: "true"
     depends_on:
