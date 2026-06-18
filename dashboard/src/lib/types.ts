@@ -11,6 +11,7 @@ export interface Detection {
 
 export interface Scan {
   id: string;
+  text: string;
   risk_score: number;
   risk_level: RiskLevel;
   llm_fallback_used: boolean;

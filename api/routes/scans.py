@@ -31,6 +31,7 @@ class DetectionResponse(BaseModel):
 
 class ScanResponse(BaseModel):
     id: uuid.UUID
+    text: str
     risk_score: float
     risk_level: str
     llm_fallback_used: bool
@@ -76,6 +77,7 @@ async def list_scans(
 def _to_response(scan) -> dict:
     return {
         "id": scan.id,
+        "text": scan.text,
         "risk_score": scan.risk_score,
         "risk_level": scan.risk_level,
         "llm_fallback_used": scan.llm_fallback_used,

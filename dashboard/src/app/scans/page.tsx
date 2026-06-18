@@ -6,6 +6,31 @@ import { api } from "@/lib/api";
 import type { Scan } from "@/lib/types";
 import { RiskBadge } from "@/components/risk-badge";
 
+function PromptCell({ text }: { text: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const isLong = text.length > 80;
+
+  return (
+    <div className="max-w-sm">
+      <p
+        className={`text-gray-400 text-xs whitespace-pre-wrap break-words ${
+          !expanded && isLong ? "line-clamp-2" : ""
+        }`}
+      >
+        {text}
+      </p>
+      {isLong && (
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="mt-1 text-xs text-blue-400 hover:text-blue-300"
+        >
+          {expanded ? "Show less" : "Show more"}
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function ScansPage() {
   const [scans, setScans] = useState<Scan[]>([]);
   const [loading, setLoading] = useState(true);
@@ -34,10 +59,10 @@ export default function ScansPage() {
                 Score
               </th>
               <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wide">
-                Detections
+                Prompt
               </th>
               <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wide">
-                Source
+                Detections
               </th>
               <th className="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wide">
                 Date
@@ -63,7 +88,7 @@ export default function ScansPage() {
             {scans.map((scan) => (
               <tr
                 key={scan.id}
-                className="hover:bg-gray-800/40 transition-colors"
+                className="hover:bg-gray-800/40 transition-colors align-top"
               >
                 <td className="px-4 py-3">
                   <RiskBadge level={scan.risk_level} />
@@ -71,15 +96,17 @@ export default function ScansPage() {
                 <td className="px-4 py-3 font-mono text-white">
                   {scan.risk_score.toFixed(1)}
                 </td>
-                <td className="px-4 py-3 text-gray-400 max-w-xs truncate">
-                  {scan.detections.length > 0
-                    ? scan.detections
-                        .map((d) => d.attack_type.replace(/_/g, " "))
-                        .join(", ")
-                    : <span className="text-gray-600">None</span>}
+                <td className="px-4 py-3">
+                  <PromptCell text={scan.text} />
                 </td>
-                <td className="px-4 py-3 text-gray-500">
-                  {scan.source ?? "—"}
+                <td className="px-4 py-3 text-gray-400 max-w-xs">
+                  {scan.detections.length > 0 ? (
+                    scan.detections
+                      .map((d) => d.attack_type.replace(/_/g, " "))
+                      .join(", ")
+                  ) : (
+                    <span className="text-gray-600">None</span>
+                  )}
                 </td>
                 <td className="px-4 py-3 text-gray-500 whitespace-nowrap">
                   {new Date(scan.created_at).toLocaleString()}
