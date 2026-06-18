@@ -7,10 +7,10 @@ from dataclasses import dataclass
 from core.classification.classifier import DetectionResult
 
 SEVERITY_WEIGHTS = {
-    "LOW": 15,
-    "MEDIUM": 35,
-    "HIGH": 65,
-    "CRITICAL": 90,
+    "LOW": 20,
+    "MEDIUM": 45,
+    "HIGH": 72,
+    "CRITICAL": 95,
 }
 
 RISK_LEVELS = [
@@ -32,22 +32,17 @@ class RiskScorer:
         if not detections:
             return ScoreResult(score=0.0, risk_level="LOW")
 
-        # Weighted average: higher-severity detections dominate
-        total_weight = 0.0
-        weighted_score = 0.0
+        # Score is anchored to the strongest detection so a weak secondary
+        # signal can't drag the overall score below what the worst threat warrants.
+        individual_scores = [
+            SEVERITY_WEIGHTS.get(d.severity, 20) * d.confidence for d in detections
+        ]
+        raw_score = max(individual_scores)
 
-        for d in detections:
-            base = SEVERITY_WEIGHTS.get(d.severity, 15)
-            adjusted = base * d.confidence
-            weight = base  # weight by severity so CRITICAL pulls score up
-            weighted_score += adjusted * weight
-            total_weight += weight
-
-        raw_score = weighted_score / total_weight if total_weight else 0.0
-
-        # Bonus: multiple independent detections increase score
+        # Each additional detection adds a diminishing bonus (capped at +15).
         if len(detections) > 1:
-            raw_score = min(raw_score * (1 + 0.1 * (len(detections) - 1)), 100)
+            secondary_bonus = min(sum(sorted(individual_scores)[:-1]) * 0.15, 15)
+            raw_score = min(raw_score + secondary_bonus, 100)
 
         score = round(min(raw_score, 100), 2)
         risk_level = next(label for threshold, label in RISK_LEVELS if score > threshold)
