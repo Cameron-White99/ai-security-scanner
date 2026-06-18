@@ -102,9 +102,15 @@ class Classifier:
 
         has_rule_match = any("rule" in d.detection_method for d in detections)
         max_confidence = max(d.confidence for d in detections)
+        distinct_attack_types = len({d.attack_type for d in detections})
 
-        # Heuristic-only signals are less reliable — apply a stricter threshold
-        # so borderline cases still get reviewed by the LLM.
+        # Multi-vector attacks warrant LLM review — layered techniques signal a
+        # more deliberate attacker even when individual confidence is acceptable.
+        # Skip if confidence is already very high (≥0.9); LLM adds little there.
+        if distinct_attack_types >= 2 and max_confidence < 0.9:
+            return True
+
+        # Heuristic-only signals are less reliable — apply a stricter threshold.
         if not has_rule_match:
             return max_confidence < min(self.llm_fallback_threshold + 0.15, 0.85)
 
