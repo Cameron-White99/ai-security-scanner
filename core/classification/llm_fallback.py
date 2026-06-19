@@ -49,7 +49,12 @@ class LLMFallbackClassifier:
             )
 
             raw = message.content[0].text.strip()
-            data = json.loads(raw)
+            # Strip markdown code fences if the model wraps its JSON response
+            if raw.startswith("```"):
+                raw = raw.split("```")[1]
+                if raw.startswith("json"):
+                    raw = raw[4:]
+            data = json.loads(raw.strip())
 
             if not data.get("is_injection"):
                 return None
