@@ -17,7 +17,7 @@ class Settings(BaseSettings):
 
     # Anthropic (LLM fallback)
     anthropic_api_key: str = ""
-    anthropic_model: str = "claude-sonnet-4-20250514"
+    anthropic_model: str = "claude-haiku-4-5-20251001"
 
     # API
     api_prefix: str = "/api/v1"
